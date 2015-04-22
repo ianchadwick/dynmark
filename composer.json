@@ -1,0 +1,24 @@
+{
+    "name": "ianchadwick/dynmark",
+    "description": "Send SMS using Dynmark - http://www.dynmark.com/",
+    "type": "library",
+    "keywords": ["api", "sms"],
+    "homepage": "https://github.com/ianchadwick/dynmark",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ian Chadwick",
+            "email": "chad@mizmoz.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4",
+        "guzzlehttp/guzzle": "~5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dynmark\\": "src/"
+        }
+    }
+}
