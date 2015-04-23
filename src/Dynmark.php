@@ -1,6 +1,11 @@
 <?php namespace Dynmark;
 
+use Dynmark\Commands\Sms\Send;
 use Dynmark\Commands\Command;
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Message\Response;
 
 class Dynmark {
 
@@ -15,26 +20,70 @@ class Dynmark {
     private $password;
 
     /**
+     * @var string
+     */
+    private $endpoint;
+
+    /**
+     * @var Client
+     */
+    private $client;
+
+    /**
      * Init with the username and password
      *
      * @param $username string
      * @param $password string
+     * @param $endpoint string
      */
-    public function __construct($username, $password)
+    public function __construct($username, $password, $endpoint = 'https://services.dynmark.com/HttpServices/')
     {
         $this->username = $username;
         $this->password = $password;
+        $this->endpoint = $endpoint;
+    }
+
+    /**
+     * Get the client
+     *
+     * @return Client
+     */
+    public function getClient()
+    {
+        if (! $this->client) {
+            $this->client = new Client();
+        }
+
+        return $this->client;
+    }
+
+    /**
+     * Set the Client
+     *
+     * @param ClientInterface $client
+     * @return $this
+     */
+    public function setClient(ClientInterface $client)
+    {
+        $this->client = $client;
+        return $this;
     }
 
     /**
      * Execute command
      *
-     * @param $command
+     * @param string $command
      * @return mixed
      */
     public function fire(Command $command)
     {
-        $command->setCredentials($this->username, $this->password);
-        return $command->fire();
+        $payload = $command->getPayload();
+        $url = $this->endpoint . $command->getMethod();
+
+        $payload['user'] = $this->username;
+        $payload['password'] = $this->password;
+
+        return $this->getClient()
+            ->post($url, ['body' => $payload]);
     }
 }

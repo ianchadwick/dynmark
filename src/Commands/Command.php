@@ -1,73 +1,28 @@
 <?php namespace Dynmark\Commands;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Message\Response;
+use Dynmark\Dynmark;
 
 abstract class Command {
 
     /**
-     * Default endpoint for the request
-     * @var string
+     * @var Dynmark
      */
-    const DEFAULT_ENDPOINT = 'https://services.dynmark.com/HttpServices/';
+    private $dynmark;
 
     /**
-     * Endpoint to use, can be overridden using setHttpEndpoint
-     * @var string
+     * @param Dynmark $dynmark
      */
-    private $endpoint = self::DEFAULT_ENDPOINT;
-
-    /**
-     * @var string
-     */
-    private $username;
-
-    /**
-     * @var string
-     */
-    private $password;
-
-    /**
-     * Override the default endpoint
-     *
-     * @param string $endpoint
-     * @return Commands
-     */
-    public function setHttpEndpoint($endpoint = self::DEFAULT_ENDPOINT)
+    public function __construct(Dynmark $dynmark)
     {
-        $this->endpoint = $endpoint;
-        return $this;
+        $this->dynmark = $dynmark;
     }
 
     /**
-     * Set the account details
-     *
-     * @param $username
-     * @param $password
-     */
-    public function setCredentials($username, $password)
-    {
-        $this->username = $username;
-        $this->password = $password;
-    }
-
-    /**
-     * Run the command
-     *
-     * @return FutureResponse
+     * @return mixed
      */
     public function fire()
     {
-        $payload = $this->getPayload();
-        $url = $this->endpoint . $this->getMethod();
-
-        $payload['user'] = $this->username;
-        $payload['password'] = $this->password;
-
-        $client = new Client();
-        $response = $client->post($url, ['body' => $payload]);
-        return $response;
+        return $this->dynmark->fire($this);
     }
 
     /**
@@ -75,12 +30,12 @@ abstract class Command {
      *
      * @return array
      */
-    abstract protected function getPayload();
+    abstract public function getPayload();
 
     /**
      * Get the method for the command
      *
      * @return string
      */
-    abstract protected function getMethod();
+    abstract public function getMethod();
 }

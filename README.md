@@ -14,7 +14,7 @@ Add ianchadwick/dynmark to the require part of your composer.json file
 
 ```
 "require": {
-  "ianchadwick/dynmark": "1.0.*"
+  "ianchadwick/dynmark": "dev-master"
 }
 ```
 
@@ -36,11 +36,16 @@ class MyClass {
     // init the Dynmark helper
     $dynmark = new Dynmark('myusername', 'mypassword');
     
-    // create the command with the basic text details
-    $command = new Send('0770000000', 'Dynmark', 'Hello there!');
+    // create the command
+    $command = new Send($dynmark);
+
+    // set the text details
+    $command->setFrom('Ian')
+        ->setPhone('0770000000')
+        ->setText('Hello there!');
     
     // send the text
-    $response = $dynmark->fire($command);
+    $response = $command->fire();
   }
 }
 ```

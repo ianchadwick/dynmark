@@ -22,21 +22,43 @@ class Send extends Command {
     private $filtersetname;
 
     /**
-     * Init with the minimal params required to send the Sms
+     * Set the phone
      *
      * @param $phone
-     * @param $from
-     * @param $text
+     * @return $this
      */
-    public function __construct($phone, $from, $text)
+    public function setPhone($phone)
     {
         if (strpos($phone, '0') === 0) {
             $phone = '44' . substr($phone, 1);
         }
 
         $this->phone = $phone;
+        return $this;
+    }
+
+    /**
+     * Set the from name or number
+     *
+     * @param $from
+     * @return $this
+     */
+    public function setFrom($from)
+    {
         $this->from = $from;
+        return $this;
+    }
+
+    /**
+     * Set the text message
+     *
+     * @param $text
+     * @return $this
+     */
+    public function setText($text)
+    {
         $this->text = $text;
+        return $this;
     }
 
     /**
@@ -78,7 +100,7 @@ class Send extends Command {
      *
      * @return array
      */
-    protected function getPayload()
+    public function getPayload()
     {
         return [
             'to' => $this->phone,
@@ -96,7 +118,7 @@ class Send extends Command {
      *
      * @return string
      */
-    protected function getMethod()
+    public function getMethod()
     {
         return 'SendMessage.ashx';
     }
