@@ -60,10 +60,10 @@ class Dynmark {
     /**
      * Set the Client
      *
-     * @param ClientInterface $client
+     * @param Client $client
      * @return $this
      */
-    public function setClient(ClientInterface $client)
+    public function setClient(Client $client)
     {
         $this->client = $client;
         return $this;
