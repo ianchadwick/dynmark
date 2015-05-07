@@ -1,11 +1,7 @@
 <?php namespace Dynmark;
 
-use Dynmark\Commands\Sms\Send;
 use Dynmark\Commands\Command;
-
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Message\Response;
 
 class Dynmark {
 
