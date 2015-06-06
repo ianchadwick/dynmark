@@ -1,11 +1,7 @@
 <?php namespace Dynmark;
 
-use Dynmark\Commands\Sms\Send;
 use Dynmark\Commands\Command;
-
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Message\Response;
 
 class Dynmark {
 
@@ -60,10 +56,10 @@ class Dynmark {
     /**
      * Set the Client
      *
-     * @param ClientInterface $client
+     * @param Client $client
      * @return $this
      */
-    public function setClient(ClientInterface $client)
+    public function setClient(Client $client)
     {
         $this->client = $client;
         return $this;
