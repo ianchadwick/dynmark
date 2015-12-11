@@ -2,8 +2,8 @@
 
 use Dynmark\Dynmark;
 
-abstract class Command {
-
+abstract class Command
+{
     /**
      * @var Dynmark
      */

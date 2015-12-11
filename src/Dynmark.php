@@ -3,8 +3,8 @@
 use Dynmark\Commands\Command;
 use GuzzleHttp\Client;
 
-class Dynmark {
-
+class Dynmark
+{
     /**
      * @var string
      */
@@ -68,7 +68,7 @@ class Dynmark {
     /**
      * Execute command
      *
-     * @param string $command
+     * @param Command $command
      * @return mixed
      */
     public function fire(Command $command)

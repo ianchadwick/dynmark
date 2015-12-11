@@ -2,8 +2,8 @@
 
 use Dynmark\Commands\Command;
 
-class Send extends Command {
-
+class Send extends Command
+{
     /**
      * Required params for the method
      * @var string
@@ -29,8 +29,15 @@ class Send extends Command {
      */
     public function setPhone($phone)
     {
+        // remove any whitespace
+        $phone = str_replace(' ', '', $phone);
+
         if (strpos($phone, '0') === 0) {
+            // convert to international format
             $phone = '44' . substr($phone, 1);
+        } elseif (strpos($phone, '+') === 0) {
+            // remove preceding +
+            $phone = substr($phone, 1);
         }
 
         $this->phone = $phone;
