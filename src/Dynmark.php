@@ -80,6 +80,6 @@ class Dynmark
         $payload['password'] = $this->password;
 
         return $this->getClient()
-            ->post($url, ['body' => $payload]);
+            ->post($url, ['form_params' => $payload]);
     }
 }
